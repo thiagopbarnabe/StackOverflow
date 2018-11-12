@@ -1,0 +1,9 @@
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\bin\Debug\netcoreapp2.1\StackOverflow.Core.deps.json
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\bin\Debug\netcoreapp2.1\StackOverflow.Core.dll
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\bin\Debug\netcoreapp2.1\StackOverflow.Core.pdb
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\obj\Debug\netcoreapp2.1\StackOverflow.Core.csproj.CoreCompileInputs.cache
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\obj\Debug\netcoreapp2.1\StackOverflow.Core.AssemblyInfoInputs.cache
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\obj\Debug\netcoreapp2.1\StackOverflow.Core.AssemblyInfo.cs
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\obj\Debug\netcoreapp2.1\StackOverflow.Core.dll
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\obj\Debug\netcoreapp2.1\StackOverflow.Core.pdb
+C:\Users\Alexandre\source\repos\StackOverflow\StackOverflow.Core\obj\Debug\netcoreapp2.1\StackOverflow.Core.csprojAssemblyReference.cache
