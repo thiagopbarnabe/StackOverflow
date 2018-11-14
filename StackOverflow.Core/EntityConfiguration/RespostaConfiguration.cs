@@ -12,11 +12,19 @@ namespace StackOverflow.Core.EntityConfiguration
 
             builder.Property(r => r.Descricao)
                 .IsRequired()
-                .HasColumnType("varchar(1000)");
+                .HasColumnType("varchar(max)");
 
-            builder.HasOne(p => p.ObjPergunta)
-                .WithMany()
-                .HasForeignKey(r => r.PerguntaId);
+            builder.HasOne(p => p.Pergunta)
+                .WithMany(p=>p.Respostas)
+                .HasForeignKey(r => r.PerguntaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(p => p.Autor)
+                .WithMany(p => p.Respostas)
+                .HasForeignKey(p => p.AutorId);
+
+            builder.HasOne(p => p.Categoria).WithMany(p => p.Respostas);
+
         }
     }
 }

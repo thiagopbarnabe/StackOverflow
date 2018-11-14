@@ -10,5 +10,9 @@ namespace StackOverflow.Core.Entities
         public string Nome { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
+
+        public List<Pergunta> Perguntas { get; set; }
+        public List<Resposta> Respostas { get; set; }
+
     }
 }

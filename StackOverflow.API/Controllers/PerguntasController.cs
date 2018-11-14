@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using StackOverflow.Core.Contexts;
+using StackOverflow.Core.Entities;
 
 namespace StackOverflow.API.Controllers
 {
@@ -11,24 +14,113 @@ namespace StackOverflow.API.Controllers
     [ApiController]
     public class PerguntasController : ControllerBase
     {
-        public IActionResult ConsultarPergunta()
+        private readonly StackOverflowContext _context;
+
+        public PerguntasController(StackOverflowContext context)
         {
-            return Ok();
+            _context = context;
         }
 
-        public IActionResult CriarPergunta()
+        // GET: api/Perguntas
+        [HttpGet]
+        public IEnumerable<Pergunta> GetPerguntas()
         {
-            return Ok();
+            return _context.Perguntas;
         }
 
-        public IActionResult AlterarPergunta()
+        // GET: api/Perguntas/5
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetPergunta([FromRoute] int id)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var pergunta = await _context.Perguntas.FindAsync(id);
+
+            if (pergunta == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(pergunta);
         }
 
-        public IActionResult DeletarPergunta()
+        // PUT: api/Perguntas/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPergunta([FromRoute] int id, [FromBody] Pergunta pergunta)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (id != pergunta.PerguntaId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(pergunta).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!PerguntaExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/Perguntas
+        [HttpPost]
+        public async Task<IActionResult> PostPergunta([FromBody] Pergunta pergunta)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            _context.Perguntas.Add(pergunta);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetPergunta", new { id = pergunta.PerguntaId }, pergunta);
+        }
+
+        // DELETE: api/Perguntas/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePergunta([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var pergunta = await _context.Perguntas.FindAsync(id);
+            if (pergunta == null)
+            {
+                return NotFound();
+            }
+
+            _context.Perguntas.Remove(pergunta);
+            await _context.SaveChangesAsync();
+
+            return Ok(pergunta);
+        }
+
+        private bool PerguntaExists(int id)
+        {
+            return _context.Perguntas.Any(e => e.PerguntaId == id);
         }
     }
 }

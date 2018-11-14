@@ -1,0 +1,48 @@
+﻿@model StackOverflow.Core.Entities.Resposta
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Resposta</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataPublicacao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataPublicacao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Autor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Autor.Login)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pergunta)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pergunta.Descricao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Categoria.Descricao)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RespostaId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

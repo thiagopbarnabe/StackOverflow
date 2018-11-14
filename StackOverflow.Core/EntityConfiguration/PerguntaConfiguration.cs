@@ -10,9 +10,17 @@ namespace StackOverflow.Core.EntityConfiguration
         {
             builder.HasKey(p => p.PerguntaId);
 
+            builder.Property(p => p.Titulo)
+                .IsRequired()
+                .HasColumnType("varchar(100)");
+
             builder.Property(p => p.Descricao)
                 .IsRequired()
-                .HasColumnType("varchar(1000)");
+                .HasColumnType("varchar(max)");
+
+            builder.HasOne(p => p.Autor).WithMany(p => p.Perguntas);
+
+            builder.HasOne(p => p.Categoria).WithMany(p => p.Perguntas);
         }
     }
 }

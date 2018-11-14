@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StackOverflow.Core.Contexts;
 using StackOverflow.Core.Services;
 using StackOverflow.Core.Services.Interfaces;
 
@@ -28,14 +30,26 @@ namespace StackOverflow.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //var connection = @"Data Source=.\SQLExpress;Initial Catalog=StackOverflow;Integrated Security=True";
-            //services.AddDbContext<StackOverflowContext>(options => options.UseSqlServer(connection));
+            var connection = @"Data Source=localhost;Initial Catalog=StackOverflow;Integrated Security=True";
+            services.AddDbContext<StackOverflowContext>();// (options => options.UseSqlServer(connection));
 
-            services.AddTransient<IPerguntasServices, PerguntasServices>();
-            services.AddTransient<IRespostasServices, RespostasServices>();
-            services.AddTransient<IAutorService, AutorService>();
+            //services.AddTransient<IPerguntasServices, PerguntasServices>();
+            //services.AddTransient<IRespostasServices, RespostasServices>();
+            //services.AddTransient<IAutorService, AutorService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
+
+            services.AddAuthentication("app")
+                    .AddCookie("app",
+                        o =>
+                        {
+                            o.LoginPath = "/account/index";
+                            o.AccessDeniedPath = "/account/denied";
+
+                        });
+
+            services.AddMemoryCache();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,19 +65,15 @@ namespace StackOverflow.Web
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "perguntas",
-                    template: "perguntas",
-                    defaults: new { controller = "Perguntas", action = "Index" }
-            );
-
-                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Perguntas}/{action=Index}/{id?}");
             });
         }
     }
